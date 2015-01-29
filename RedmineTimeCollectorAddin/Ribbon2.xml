@@ -1,0 +1,12 @@
+﻿<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+  <ribbon>
+    <tabs>
+      <tab idMso="TabMail">
+        <group id="group1" label="Redmine">
+          <button id="Button" onAction="OnClick" label="Отчёт" screentip="Text" supertip="Inserts a table at the cursor location."/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
+

@@ -3,7 +3,7 @@
     <tabs>
       <tab idMso="TabMail">
         <group id="group1" label="Redmine">
-          <button id="Button" onAction="OnClick" label="Отчёт" screentip="Text" supertip="Inserts a table at the cursor location."/>
+          <button id="Button" onAction="OnClick" label="Отчёт" screentip="Отчёт из RM" supertip="Запустите и забудьте"/>
         </group>
       </tab>
     </tabs>

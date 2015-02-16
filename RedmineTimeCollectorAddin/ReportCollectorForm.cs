@@ -71,8 +71,8 @@ namespace OutlookAddIn1
                 return;
             }
 
-            MailItem mailItem = (MailItem)
-            Globals.ThisAddIn.Application.CreateItem(OlItemType.olMailItem);
+            MailItem mailItem = (MailItem)Globals.ThisAddIn.Application.CreateItem(OlItemType.olMailItem);
+            mailItem.BodyFormat = OlBodyFormat.olFormatPlain;
             mailItem.Subject = string.Format("Отчёт за {0:dd.MM.yyyy}. {1}", reportDateTimePicker.Value, Settings.Default.SubjectTail);
             mailItem.To = receiverTextBox.Text;
             //mailItem.Body = textBox3.Text+"\r\n";
@@ -90,6 +90,7 @@ namespace OutlookAddIn1
                     strBuilder.AppendLine(string.Join("\r\n", _reports[item].Items));
                     strBuilder.AppendLine();
                 }
+                strBuilder.AppendLine();
             }
 
             mailItem.Body = strBuilder.ToString();
@@ -223,7 +224,8 @@ namespace OutlookAddIn1
             // Use the default row value when Value property is null. 
             if (this.Value == null)
             {
-                ctl.Value = (DateTime)this.DefaultNewRowValue;
+                var defaultNewRowValue = this.DefaultNewRowValue;
+                if (defaultNewRowValue != null) if (ctl != null) ctl.Value = (DateTime)defaultNewRowValue;
             }
             else
             {

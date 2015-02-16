@@ -38,7 +38,7 @@ namespace OutlookAddIn1
 
                 decimal totalHours = 0;
 
-                foreach (var timeEntry in timeEntries.Where(e => e.User.Name.Contains(employeeItem.Name)).OrderBy(e => e.CreatedOn)) //
+                foreach (var timeEntry in timeEntries.Where(e => e.User.Name.StartsWith(employeeItem.Name, StringComparison.CurrentCultureIgnoreCase)).OrderBy(e => e.CreatedOn)) //
                 {
                     report.EmployeeItem.Name = timeEntry.User.Name;
                     strBuilder.Clear();

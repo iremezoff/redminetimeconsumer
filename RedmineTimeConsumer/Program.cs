@@ -18,11 +18,11 @@ namespace RedmineTimeConsumer
         {
             if (args.Length < 1)
             {
-                Console.WriteLine("Не указан ты");
+                Console.WriteLine("Usage: RedMineTimeConsumer <Дата yyyy-MM-dd> <Login RM>");
                 Environment.Exit(-1);
             }
 
-            var employeeName = args[0];
+            var login = args[0];
             string date = args.Length < 2 ? DateTime.Now.ToString("yyyy-MM-dd") : args[1];
 
             string host = "http://redmine.ugsk.ru";
@@ -35,13 +35,20 @@ namespace RedmineTimeConsumer
             var parameters = new NameValueCollection { { "limit", "1000" }
                                                       ,{ "offset", "0" }
                                                     };
-            var users = manager.GetObjectList<User>(parameters).Where(e => e.LastName.Contains(employeeName)
-                                                                       && !e.FirstName.Contains("External")
+            //var users = manager.GetObjectList<User>(parameters).Where(e => e.LastName.Contains(employeeName)
+            //                                                           && !e.FirstName.Contains("External")
+            //                                                            ).OrderBy(e => e.Id);
+
+            var users = manager.GetObjectList<User>(parameters).Where(e => e.Login.Equals(login, StringComparison.InvariantCultureIgnoreCase)
                                                                         ).OrderBy(e => e.Id);
+
             int userID = 0;
+            string userName = string.Empty;
             foreach (var u in users)
             {
                 userID = u.Id;
+                userName = string.Format("{0} {1}", u.LastName, u.FirstName);
+                break; // instead of top 1 :)
             }
 
             // Time Entries
@@ -63,14 +70,14 @@ namespace RedmineTimeConsumer
 
             var strBuilder = new StringBuilder();
 
-            bool isWrittenEmployeeName = false;
+            //bool isWrittenEmployeeName = false;
 
             //var path = Path.GetTempFileName() + ".txt";
             var pathTime = string.Format("{0}-time.txt", date);
             var pathReport = string.Format("{0}-report.txt", date);
             StringBuilder sbOut = new StringBuilder();
             double hoursSum = 0;
-            string name = string.Empty;
+            //string name = string.Empty;
 
             using (var swReport = new StreamWriter(pathReport, true))
             {
@@ -78,17 +85,18 @@ namespace RedmineTimeConsumer
                 {
                     //sw.WriteLine("--------------");
                     sbOut.AppendLine("--------------");
+                    sbOut.AppendLine(userName);
 
                     foreach (var timeEntry in timeEntries) //
                     {
 
-                        if (!isWrittenEmployeeName)
-                        {
-                            //sw.Write(timeEntry.User.Name);
-                            name = timeEntry.User.Name;
-                            sbOut.AppendLine(name);
-                            isWrittenEmployeeName = true;
-                        }
+                        //if (!isWrittenEmployeeName)
+                        //{
+                        //    //sw.Write(timeEntry.User.Name);
+                        //    //name = timeEntry.User.Name;
+                        //    sbOut.AppendLine(userName);
+                        //    isWrittenEmployeeName = true;
+                        //}
                         strBuilder.Clear();
                         strBuilder.AppendFormat("{0}. {1} ({2}): ", ++i, timeEntry.Project.Name, timeEntry.Activity.Name, timeEntry.SpentOn);
                         //Issue issue=null;
@@ -121,13 +129,13 @@ namespace RedmineTimeConsumer
                         overTime = string.Empty;
                     }
 
-                    if (!string.IsNullOrEmpty(name))
+                    if (hoursSum > 0)
                     {
-                        swTime.WriteLine("{0,15} [{1:0.00}] {2}", employeeName, hoursSum, overTime);
+                        swTime.WriteLine("{0,25} [{1:0.00}] {2}", userName, hoursSum, overTime);
                     }
                     else
                     {
-                        swTime.WriteLine("{0,15} [----]", employeeName);
+                        swTime.WriteLine("{0,25} [----]", userName);
 
                     }
                     //System.Console.WriteLine(sbOut.ToString());

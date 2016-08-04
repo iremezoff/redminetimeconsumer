@@ -42,7 +42,6 @@
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.vacationTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Entries = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -53,6 +52,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.subjectTailTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.Entries = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.employeeGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -77,7 +77,7 @@
             // 
             // reportDateTimePicker
             // 
-            this.reportDateTimePicker.CustomFormat = "dd.MM.yyyy";
+            this.reportDateTimePicker.CustomFormat = "dd.MM.yy";
             this.reportDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.reportDateTimePicker.Location = new System.Drawing.Point(47, 12);
             this.reportDateTimePicker.Name = "reportDateTimePicker";
@@ -166,13 +166,6 @@
             this.Hours.Name = "Hours";
             this.Hours.ReadOnly = true;
             // 
-            // Entries
-            // 
-            this.Entries.DataPropertyName = "Entries";
-            this.Entries.HeaderText = "Пункты";
-            this.Entries.Name = "Entries";
-            this.Entries.ReadOnly = true;
-            // 
             // bindingSource1
             // 
             this.bindingSource1.DataSource = typeof(OutlookAddIn1.EmployeeItem);
@@ -236,7 +229,6 @@
             this.redmineUriTextBox.Name = "redmineUriTextBox";
             this.redmineUriTextBox.Size = new System.Drawing.Size(234, 20);
             this.redmineUriTextBox.TabIndex = 5;
-            this.redmineUriTextBox.Text = "http://redmine.ugsk.ru";
             // 
             // label3
             // 
@@ -262,6 +254,13 @@
             this.label2.Size = new System.Drawing.Size(33, 13);
             this.label2.TabIndex = 25;
             this.label2.Text = "Дата";
+            // 
+            // Entries
+            // 
+            this.Entries.DataPropertyName = "Entries";
+            this.Entries.HeaderText = "Пункты";
+            this.Entries.Name = "Entries";
+            this.Entries.ReadOnly = true;
             // 
             // ReportCollectorForm
             // 
